@@ -22,6 +22,7 @@ import type {
 import type {
   AdminLoginInput,
   AdminUser,
+  CountResponse,
   ErrorResponse,
   GetRegistrationsParams,
   HealthStatus,
@@ -209,6 +210,84 @@ export const useSubmitRegistration = <TError = ErrorType<ErrorResponse>,
       > => {
       return useMutation(getSubmitRegistrationMutationOptions(options));
     }
+
+export const getGetCountUrl = () => {
+
+
+
+
+  return `/api/count`
+}
+
+/**
+ * Returns the total number of registrations (public)
+ * @summary Get total registration count
+ */
+export const getCount = async ( options?: RequestInit): Promise<CountResponse> => {
+
+  return customFetch<CountResponse>(getGetCountUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetCountQueryKey = () => {
+    return [
+    `/api/count`
+    ] as const;
+    }
+
+
+export const getGetCountQueryOptions = <TData = Awaited<ReturnType<typeof getCount>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCount>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCountQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCount>>> = ({ signal }) => getCount({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCount>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCountQueryResult = NonNullable<Awaited<ReturnType<typeof getCount>>>
+export type GetCountQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get total registration count
+ */
+
+export function useGetCount<TData = Awaited<ReturnType<typeof getCount>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCount>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetCountQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 export const getDownloadVcfUrl = () => {
 

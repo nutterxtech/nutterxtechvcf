@@ -8,6 +8,7 @@
 
 export * from './adminLoginInput';
 export * from './adminUser';
+export * from './countResponse';
 export * from './errorResponse';
 export * from './getRegistrationsParams';
 export * from './healthStatus';

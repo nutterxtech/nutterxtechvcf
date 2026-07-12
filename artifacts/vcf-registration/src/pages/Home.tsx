@@ -1,8 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useSubmitRegistration } from "@workspace/api-client-react";
-import { useState } from "react";
+import { useSubmitRegistration, useGetCount } from "@workspace/api-client-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,9 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { SiNutanix } from "react-icons/si"; // Just a placeholder for corporate logo
-import { CheckCircle2, Download, Building2 } from "lucide-react";
+import { Download, Building2, Users, Trophy } from "lucide-react";
+
+const WHATSAPP_URL = "https://chat.whatsapp.com/JsKmQMpECJMHyxucHquF15?s=cl&p=a&mlu=0&amv=1";
+const TARGET = 500;
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -25,123 +27,179 @@ const formSchema = z.object({
 
 export default function Home() {
   const { toast } = useToast();
-  const [isSuccess, setIsSuccess] = useState(false);
   const submitRegistration = useSubmitRegistration();
+
+  const { data: countData, refetch: refetchCount } = useGetCount({
+    query: { refetchInterval: 20000 },
+  });
+
+  const count = countData?.count ?? 0;
+  const progress = Math.min((count / TARGET) * 100, 100);
+  const targetReached = count >= TARGET;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      phone: "",
-    },
+    defaultValues: { name: "", phone: "" },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Strip spaces
-    const phone = values.phone.replace(/\s+/g, '');
-    
-    submitRegistration.mutate({ data: { name: values.name, phone } }, {
-      onSuccess: () => {
-        setIsSuccess(true);
-      },
-      onError: (error) => {
-        if (error.status === 409) {
-          form.setError("phone", { type: "manual", message: "This phone number is already registered." });
-        } else {
-          toast({
-            variant: "destructive",
-            title: "Registration Failed",
-            description: error.data?.message || "An unexpected error occurred. Please try again.",
-          });
-        }
+    const phone = values.phone.replace(/\s+/g, "");
+
+    submitRegistration.mutate(
+      { data: { name: values.name, phone } },
+      {
+        onSuccess: () => {
+          refetchCount();
+          // Immediately redirect to the WhatsApp group
+          window.location.href = WHATSAPP_URL;
+        },
+        onError: (error) => {
+          if (error.status === 409) {
+            form.setError("phone", {
+              type: "manual",
+              message: "This phone number is already registered.",
+            });
+          } else {
+            toast({
+              variant: "destructive",
+              title: "Registration Failed",
+              description:
+                error.data?.message || "An unexpected error occurred. Please try again.",
+            });
+          }
+        },
       }
-    });
+    );
   }
 
   return (
     <div className="min-h-[100dvh] flex flex-col items-center justify-center p-4 relative overflow-hidden bg-background">
-      {/* Background ambient light */}
+      {/* Ambient background glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="w-full max-w-md z-10">
-        <div className="text-center mb-8 flex flex-col items-center">
+      <div className="w-full max-w-md z-10 space-y-5">
+        {/* Header */}
+        <div className="text-center flex flex-col items-center mb-2">
           <div className="w-16 h-16 bg-primary/10 flex items-center justify-center rounded-2xl mb-4 border border-primary/20 shadow-lg shadow-primary/5">
             <Building2 className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Nutterx Technologies</h1>
-          <p className="text-muted-foreground mt-2 font-medium">VCF Registration</p>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            Nutterx Technologies
+          </h1>
+          <p className="text-muted-foreground mt-1 font-medium">VCF Registration</p>
         </div>
 
-        <Card className="border-white/10 bg-card/50 backdrop-blur-xl shadow-2xl">
-          <CardHeader>
-            {!isSuccess && (
-              <>
-                <CardTitle className="text-xl">Join the Network</CardTitle>
-                <CardDescription>
-                  Register your phone number to download the official Nutterx Technologies contact card.
-                </CardDescription>
-              </>
-            )}
-          </CardHeader>
-          <CardContent>
-            {isSuccess ? (
-              <div className="flex flex-col items-center text-center py-6 animate-in fade-in zoom-in duration-500">
-                <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mb-6">
-                  <CheckCircle2 className="w-8 h-8 text-green-500" />
-                </div>
-                <h2 className="text-2xl font-bold mb-2">Registration Successful</h2>
-                <p className="text-muted-foreground mb-8">
-                  Thank you for registering with Nutterx Technologies.
-                </p>
-                <Button asChild size="lg" className="w-full text-md h-12 shadow-lg shadow-primary/20">
-                  <a href="/api/download-vcf" download="NUTTERX.vcf">
-                    <Download className="mr-2 h-5 w-5" />
-                    Download VCF
-                  </a>
-                </Button>
+        {/* Progress Card */}
+        <Card className="border-white/10 bg-card/50 backdrop-blur-xl shadow-xl overflow-hidden">
+          <CardContent className="pt-5 pb-5">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                <Users className="w-4 h-4 text-primary" />
+                Community Progress
               </div>
-            ) : (
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John Doe" className="bg-background/50 h-11" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
-                        <FormControl>
-                          <Input placeholder="+254712345678" className="bg-background/50 h-11" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" className="w-full h-11 text-md" disabled={submitRegistration.isPending}>
-                    {submitRegistration.isPending ? "Registering..." : "Register"}
-                  </Button>
-                </form>
-              </Form>
-            )}
+              <div className="text-sm font-mono font-bold text-primary">
+                {count.toLocaleString()} / {TARGET.toLocaleString()}
+              </div>
+            </div>
+
+            <Progress
+              value={progress}
+              className="h-3 rounded-full bg-white/5"
+            />
+
+            <div className="mt-3 text-center">
+              {targetReached ? (
+                <p className="text-sm font-medium text-green-400 flex items-center justify-center gap-1.5">
+                  <Trophy className="w-4 h-4" />
+                  Goal reached! VCF download is now unlocked.
+                </p>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-semibold text-foreground">
+                    {(TARGET - count).toLocaleString()}
+                  </span>{" "}
+                  more {TARGET - count === 1 ? "registration" : "registrations"} to unlock the VCF download
+                </p>
+              )}
+            </div>
           </CardContent>
         </Card>
-        
-        <div className="text-center mt-8 text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Nutterx Technologies. All rights reserved.</p>
-        </div>
+
+        {/* VCF Download — only unlocked after target is reached */}
+        {targetReached && (
+          <Button
+            asChild
+            size="lg"
+            className="w-full h-12 text-base font-semibold shadow-lg shadow-primary/30 gap-2 animate-in fade-in duration-500"
+          >
+            <a href="/api/download-vcf" download="NUTTERX.vcf">
+              <Download className="h-5 w-5" />
+              Download NUTTERX.vcf
+            </a>
+          </Button>
+        )}
+
+        {/* Registration Form */}
+        <Card className="border-white/10 bg-card/50 backdrop-blur-xl shadow-2xl">
+          <CardHeader>
+            <CardTitle className="text-xl">Join the Network</CardTitle>
+            <CardDescription>
+              Register your phone number to join our WhatsApp community and unlock the contact card.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="John Doe"
+                          className="bg-background/50 h-11"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone Number</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="+254712345678"
+                          className="bg-background/50 h-11"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="w-full h-11 text-base font-semibold"
+                  disabled={submitRegistration.isPending}
+                >
+                  {submitRegistration.isPending ? "Registering..." : "Register & Join"}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+
+        <p className="text-center text-sm text-muted-foreground pb-2">
+          © {new Date().getFullYear()} Nutterx Technologies. All rights reserved.
+        </p>
       </div>
     </div>
   );

@@ -53,6 +53,10 @@ export interface SettingsInput {
   address: string;
 }
 
+export interface CountResponse {
+  count: number;
+}
+
 export interface AdminLoginInput {
   username: string;
   password: string;

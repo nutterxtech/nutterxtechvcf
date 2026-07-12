@@ -39,6 +39,15 @@ export const SubmitRegistrationResponse = zod.object({
 
 
 /**
+ * Returns the total number of registrations (public)
+ * @summary Get total registration count
+ */
+export const GetCountResponse = zod.object({
+  "count": zod.number()
+})
+
+
+/**
  * Download the Nutterx Technologies VCF contact file
  * @summary Download VCF contact card
  */

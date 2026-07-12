@@ -67,6 +67,20 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /count:
+    get:
+      operationId: getCount
+      tags: [registration]
+      summary: Get total registration count
+      description: Returns the total number of registrations (public)
+      responses:
+        "200":
+          description: Registration count
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CountResponse"
+
   /download-vcf:
     get:
       operationId: downloadVcf
@@ -381,6 +395,14 @@ components:
         - email
         - website
         - address
+
+    CountResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+      required:
+        - count
 
     AdminLoginInput:
       type: object

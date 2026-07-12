@@ -101,7 +101,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (isAuthError) {
-      setLocation("/admin/login");
+      setLocation("/?admin=true");
     }
   }, [isAuthError, setLocation]);
 
@@ -109,7 +109,7 @@ export default function AdminDashboard() {
   
   const handleLogout = () => {
     logout.mutate(undefined, {
-      onSuccess: () => setLocation("/admin/login")
+      onSuccess: () => setLocation("/?admin=true")
     });
   };
 

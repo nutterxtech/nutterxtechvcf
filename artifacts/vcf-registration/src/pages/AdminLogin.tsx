@@ -38,7 +38,7 @@ export default function AdminLogin() {
   function onSubmit(values: z.infer<typeof loginSchema>) {
     adminLogin.mutate({ data: values }, {
       onSuccess: () => {
-        setLocation("/admin");
+        setLocation("/?admin=true");
       },
       onError: (error) => {
         toast({
