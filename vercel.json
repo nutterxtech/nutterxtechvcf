@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm install --frozen-lockfile && pnpm --filter @workspace/db run push-force && pnpm --filter @workspace/vcf-registration run build && node artifacts/api-server/build-vercel.mjs",
+  "buildCommand": "pnpm install --frozen-lockfile && pnpm --filter @workspace/vcf-registration run build && node artifacts/api-server/build-vercel.mjs",
   "outputDirectory": "artifacts/vcf-registration/dist/public",
   "framework": null,
   "rewrites": [

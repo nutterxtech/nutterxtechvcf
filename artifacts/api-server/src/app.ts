@@ -6,6 +6,7 @@ import connectPgSimple from "connect-pg-simple";
 import { pinoHttp } from "pino-http";
 import router from "./routes/index.js";
 import { logger } from "./lib/logger.js";
+import { ensureSchema } from "@workspace/db";
 
 // Augment express-session with our admin field
 declare module "express-session" {
@@ -85,5 +86,13 @@ app.use(
 );
 
 app.use("/api", router);
+
+// Auto-migrate: create tables if they don't exist yet.
+// Runs once per cold start — all statements are idempotent (IF NOT EXISTS).
+if (databaseUrl) {
+  ensureSchema(databaseUrl)
+    .then(() => logger.info("Schema bootstrap complete"))
+    .catch((err) => logger.error({ err }, "Schema bootstrap failed — check DATABASE_URL"));
+}
 
 export default app;
