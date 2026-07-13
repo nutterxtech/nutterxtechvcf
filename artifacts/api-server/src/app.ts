@@ -16,6 +16,10 @@ declare module "express-session" {
 
 const app = express();
 
+// Trust Vercel's proxy layer so express-rate-limit can read the real
+// client IP from X-Forwarded-For without throwing ERR_ERL_UNEXPECTED_X_FORWARDED_FOR
+app.set("trust proxy", 1);
+
 // Security headers
 app.use(helmet());
 
