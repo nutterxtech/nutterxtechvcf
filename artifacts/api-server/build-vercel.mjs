@@ -22,9 +22,10 @@ async function buildVercel() {
     platform: "node",
     bundle: true,
     format: "esm",
-    // pino-plugin emits multiple worker files, so we must use outdir not outfile
+    // pino-plugin emits multiple worker files alongside the main bundle,
+    // so we must use outdir (not outfile). Without entryNames the main
+    // entry src/app.ts → api/app.mjs; workers keep their own names.
     outdir: path.resolve(repoRoot, "api"),
-    entryNames: "handler",
     outExtension: { ".js": ".mjs" },
     logLevel: "info",
     external: [
