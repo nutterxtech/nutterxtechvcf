@@ -4,10 +4,12 @@ import registerRouter from "./register";
 import vcfRouter from "./vcf";
 import adminRouter from "./admin";
 import countRouter from "./count";
+import debugRouter from "./debug";
 
 const router: IRouter = Router();
 
 router.use(healthRouter);
+router.use(debugRouter);
 router.use(countRouter);
 router.use(registerRouter);
 router.use(vcfRouter);
