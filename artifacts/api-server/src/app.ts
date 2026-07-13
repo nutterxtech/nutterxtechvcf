@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 import { pinoHttp } from "pino-http";
 import router from "./routes/index.js";
 import { logger } from "./lib/logger.js";
@@ -39,15 +40,34 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session middleware (in-memory store — works for Replit long-running process)
-// For Vercel serverless, sessions reset per cold start; use connect-pg-simple if persistence needed.
+// Session middleware
+// - Production (Vercel + Supabase): uses connect-pg-simple so sessions survive
+//   across serverless invocations. DATABASE_URL must be set in Vercel env vars.
+// - Local dev (Replit): falls back to in-memory (fine for a long-running process).
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
   logger.warn("SESSION_SECRET not set — using insecure fallback.");
 }
 
+const databaseUrl = process.env.DATABASE_URL;
+
+let sessionStore: session.Store | undefined;
+if (databaseUrl) {
+  const PgStore = connectPgSimple(session);
+  sessionStore = new PgStore({
+    conString: databaseUrl,
+    createTableIfMissing: true,
+    // Keep session rows tidy — prune expired sessions daily
+    pruneSessionInterval: 60 * 60 * 24,
+  });
+  logger.info("Session store: PostgreSQL (connect-pg-simple)");
+} else {
+  logger.warn("DATABASE_URL not set — using in-memory session store (not suitable for production).");
+}
+
 app.use(
   session({
+    store: sessionStore,
     secret: sessionSecret ?? "dev-secret-please-set-SESSION_SECRET",
     resave: false,
     saveUninitialized: false,

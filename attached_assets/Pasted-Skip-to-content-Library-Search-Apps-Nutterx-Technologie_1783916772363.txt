@@ -1,0 +1,226 @@
+Skip to content
+Library
+Search
+Apps
+Nutterx Technologies VCF Registration
+Nutterx Technologies VCF Registration
+Website
+/
+Faileed with...error during build: Error: PORT environment variable is required but was not provided. at file:///vercel/path0/artifacts/vcf-registration/node_modules/.vite-temp/vite.config.ts.timestamp-1783857001038-bb99b8391b5c28.mjs:10:9 at ModuleJob.run (node:internal/modules/esm/module_job:437:25) at async node:internal/modules/esm/loader:639:26 at async loadConfigFromBundledFile (file:///vercel/path0/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:35996:12) at async bundleAndLoadConfigFile (file:///vercel/path0/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:35884:17) at async loadConfigFromFile (file:///vercel/path0/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:35851:42) at async resolveConfig (file:///vercel/path0/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:35500:22) at async createBuilder (file:///vercel/path0/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/chunks/config.js:33955:19) at async CAC. (file:///vercel/path0/node_modules/.pnpm/vite@7.3.6_@types+node@25.9.4_jiti@2.7.0_lightningcss@1.32.0_tsx@4.23.0_yaml@2.9.0/node_modules/vite/dist/node/cli.js:629:10) /vercel/path0/artifacts/vcf-registration:  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/vcf-registration@0.0.0 build: vite build --config vite.config.ts Exit status 1 Error: Command "pnpm install --frozen-lockfile && pnpm --filter @workspace/vcf-registration run build" exited with 1
+
+17 hours ago
+PORT and BASE_PATH are only needed at runtime (dev server), not at build time. I'll make both conditional on the Vite command so Vercel's build phase doesn't crash.
+
+Both services are back up. The Vercel fix is in — PORT and BASE_PATH are now only validated when running the dev server (isBuild check), so vite build on Vercel won't throw. BASE_PATH defaults to '/' which is correct for Vercel's root deployment.
+
+You can redeploy to Vercel now and the build should pass.
+
+Chevk again verify everything also preview npt showing
+
+16 hours ago
+Both services are running locally. The uploaded file has two separate issues: Vercel TypeScript errors in app.ts and preview not showing. Let me investigate both in parallel.
+
+I can see three distinct problems from the Vercel error log and current state:
+
+outputDirectory mismatch — Vite outputs to dist/public but vercel.json says dist
+Vercel TypeScript errors — Vercel compiles api/index.ts with moduleResolution: node16 instead of bundler, failing on our imports
+Preview not showing — need to confirm root cause
+Let me fix all three in parallel.
+
+Both servers are up returning 200. Let me fix the Vercel issues now — all three in parallel: wrong outputDirectory, missing root tsconfig.json (causing TypeScript failures), and fix the app.ts type annotations that break under node16 moduleResolution.
+
+The API server is still running the old build — it needs a restart to pick up the app.ts changes.
+
+All three workflows are running clean. Let me do a quick end-to-end verification of everything.
+
+Everything is verified and clean. Here's a summary of all the fixes made:
+
+Vercel build errors (3 fixes):
+
+Wrong output directory — vercel.json pointed to dist but Vite writes to dist/public. Fixed to artifacts/vcf-registration/dist/public
+
+TypeScript moduleResolution mismatch — Vercel's compiler defaulted to node16 which requires .js extensions on relative imports and resolves pino-http as a namespace (not callable). Added a root tsconfig.json with moduleResolution: bundler to match the workspace — this is the config Vercel picks up when compiling api/index.ts and its dependencies
+
+app.ts type errors — removed the explicit : Express type annotation (Express 5 types narrowed the Express interface, causing app.use() to appear missing), switched to the named { pinoHttp } import (avoids the callable signature issue under node16), and added .js extensions to relative imports
+
+Preview — was already showing correctly (screenshot confirmed). The earlier blank state was a brief port-conflict window during the restart.
+
+End-to-end test passed:
+
+/api/count → {"count":1,"target":500} ✅
+Admin login → {"username":"nutterxvcf"} ✅
+Session persists → /api/admin/me returns the same user ✅
+Redeploy to Vercel now — it should build and serve without errors.
+
+Failed to register after deployment: and also admin says invalid creds after deployment
+
+16 hours ago
+Two root causes from the log:
+
+SyntaxError: Cannot use import statement outside a module — Vercel compiles api/index.ts → api/index.js and Node loads it as CJS. Fix: api/package.json with "type":"module".
+Admin invalid creds on Vercel — Serverless functions are stateless; in-memory sessions vanish between requests. connect-pg-simple is already installed — just need to activate it when DATABASE_URL is present.
+You've reached your daily free quota limit. It will reset at 12:00 AM UTC.
+
+
+Message Agent...
+
+
+Pasted-Jul-12-15-00-24-79-POST-500-nutterxtech-vcf-vercel-app-_1783857718713.txt
+Jul 12 15:00:24.79
+POST
+500
+nutterxtech-vcf.vercel.app
+/api/register
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:23.02
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:18.48
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:17.57
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:5) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:5) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+  ...

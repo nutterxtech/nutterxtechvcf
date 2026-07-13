@@ -1,0 +1,415 @@
+Jul 12 15:00:24.79
+POST
+500
+nutterxtech-vcf.vercel.app
+/api/register
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:23.02
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:18.48
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:17.57
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:5) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:5) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:17.17
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+ 
+(node:5) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:5) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+Jul 12 15:00:16.81
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:15.93
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:14.22
+GET
+500
+nutterxtech-vcf.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:07.87
+GET
+500
+nutterxtech-7wey5o0ai-calvins-projects-5cdea25d.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:06.49
+GET
+500
+nutterxtech-7wey5o0ai-calvins-projects-5cdea25d.vercel.app
+/api/count
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+ 
+(node:4) Warning: Failed to load the ES module: /var/task/api/index.js. Make sure to set "type": "module" in the nearest package.json file or use the .mjs extension.
+ 
+/var/task/api/index.js:7
+ 
+import app from "../artifacts/api-server/src/app";
+ 
+^^^^^^
+ 
+ 
+SyntaxError: Cannot use import statement outside a module
+ 
+    at wrapSafe (node:internal/modules/cjs/loader:1804:18)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1845:20)
+ 
+    at O.l._compile (/opt/rust/bytecode.js:2:4007)
+ 
+    at Object..js (node:internal/modules/cjs/loader:2002:10)
+ 
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+ 
+    at Module.<anonymous> (node:internal/modules/cjs/loader:1396:12)
+ 
+    at /opt/rust/nodejs.js:2:13533
+ 
+    at Module.Vn (/opt/rust/nodejs.js:2:13911)
+ 
+    at e.<computed>.st._load (/opt/rust/nodejs.js:2:13503)
+ 
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+ 
+Node.js process exited with exit status: 1. The logs above can help with debugging the issue.
+Jul 12 15:00:06.40
+GET
+500
+nutterxtech-7wey5o0ai-calvins-projects-5cdea25d.vercel.app
+/api/count
