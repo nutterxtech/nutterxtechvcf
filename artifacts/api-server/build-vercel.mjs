@@ -118,7 +118,7 @@ globalThis.__dirname = __bannerPath.dirname(globalThis.__filename);
     },
   });
 
-  console.log("✅  api/handler.mjs built successfully");
+  console.log("✅  api/app.mjs (+ pino workers) built successfully");
 }
 
 buildVercel().catch((err) => {
