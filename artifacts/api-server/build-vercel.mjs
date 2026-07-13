@@ -22,7 +22,10 @@ async function buildVercel() {
     platform: "node",
     bundle: true,
     format: "esm",
-    outfile: path.resolve(repoRoot, "api/handler.mjs"),
+    // pino-plugin emits multiple worker files, so we must use outdir not outfile
+    outdir: path.resolve(repoRoot, "api"),
+    entryNames: "handler",
+    outExtension: { ".js": ".mjs" },
     logLevel: "info",
     external: [
       "*.node",
