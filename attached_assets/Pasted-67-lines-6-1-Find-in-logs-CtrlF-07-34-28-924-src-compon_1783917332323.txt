@@ -1,0 +1,71 @@
+67 lines
+
+6
+
+1
+Find in logs
+CtrlF
+07:34:28.924 
+src/components/ui/progress.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+07:34:30.648 
+src/components/ui/label.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+07:34:32.035 
+✓ 2144 modules transformed.
+07:34:32.394 
+rendering chunks...
+07:34:32.410 
+computing gzip size...
+07:34:32.430 
+dist/public/index.html                   1.47 kB │ gzip:   0.56 kB
+07:34:32.430 
+dist/public/assets/index-CbI8Pp6e.css  100.95 kB │ gzip:  16.60 kB
+07:34:32.433 
+dist/public/assets/index-CgZ3syZN.js   494.64 kB │ gzip: 153.74 kB
+07:34:32.433 
+✓ built in 4.58s
+07:34:32.921 
+✘ [ERROR] Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.921 
+07:34:32.922 
+✘ [ERROR] Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.922 
+07:34:32.923 
+✘ [ERROR] Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.923 
+07:34:32.923 
+✘ [ERROR] Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.924 
+07:34:32.934 
+4 errors
+07:34:32.935 
+07:34:32.936 
+  api/handler.mjs  2.3mb ⚠️
+07:34:32.936 
+07:34:32.936 
+⚡ Done in 394ms
+07:34:32.940 
+Error: Build failed with 4 errors:
+07:34:32.940 
+error: Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.941 
+error: Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.941 
+error: Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.941 
+error: Two output files share the same path but have different contents: api/handler.mjs
+07:34:32.941 
+    at failureErrorWithLog (/vercel/path0/node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild/lib/main.js:1467:15)
+07:34:32.942 
+    at /vercel/path0/node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild/lib/main.js:926:25
+07:34:32.942 
+    at /vercel/path0/node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild/lib/main.js:1345:9
+07:34:32.942 
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+07:34:32.942 
+  errors: [Getter/Setter],
+07:34:32.942 
+  warnings: [Getter/Setter]
+07:34:32.942 
+}
+07:34:32.951 
+Error: Command "pnpm install --frozen-lockfile && 
